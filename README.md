@@ -4,7 +4,7 @@ A simple script to demonstrate the emergence of _island monies_ (a simplistic il
 
 ## Installation
 
-This script has very few dependencies. Just run it and see what happens. The script can be run from the locally (_./islands_) or placed somewhere in the command path (e.g. _/usr/local/bin/islands_). It should run without modification on any Unix-like OS. It has not been tested on _Windows_.
+This script has very few dependencies. Just run it and see what happens. The script can be run locally (_./islands_) or placed somewhere in the command path (e.g. _/usr/local/bin/islands_). It should run without modification on any Unix-like OS. It has not been tested on _Windows_.
 
 When running this script for the first time, any unsatisfied _Python 3_ dependencies will be reported. Those least likely to be already present are _numpy_ and _matplotlib_.
 
