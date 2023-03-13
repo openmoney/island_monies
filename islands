@@ -537,6 +537,8 @@ for s in range(n_steps): # outer loop: n_passes = n_steps * n_passes_per_step
             print()
 
 
+os.system('rm ' + data_dir + '/gv/*') # clean-up
+
 #===============================================================================
         
 # TEST
