@@ -5,18 +5,18 @@
 #  
 #  Copyright 2023 John Waters <john.waters@lrc.org.uk>
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Affero General Public License as
+#  published by the Free Software Foundation, either version 3 of the
+#  License, or (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#  You should have received a copy of the GNU Affero General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #===============================================================================
 # This is a ridiculously simple script to generate payments between two
@@ -117,15 +117,18 @@ ap.add_argument('-A','--about-islands', dest='about_islands',
                 help='Display explanatory notes')
 ap.add_argument('-v', '--version', action='version',
                 version='%(prog)s ' + script_version)
-ap.add_argument('--licence', action='store_true', default=False,
-                help='display licence')
+ap.add_argument('--licence', dest='display_licence', action='store_true',
+                default=False, help='display licence')
 args = ap.parse_args()
 
-about_islands = args.about_islands
-if about_islands:
+if args.about_islands:
     os.system('cat about_islands.txt')
     quit()
 
+if args.display_licence:
+    os.system('cat licence.txt')
+    quit()
+  
 n_passes = int(args.n_passes)
 n_agents = int(args.n_agents)
 n_islands = int(args.n_islands)
