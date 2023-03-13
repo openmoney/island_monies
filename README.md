@@ -8,7 +8,7 @@ This script has very few dependencies. Just run it and see what happens. The scr
 
 When running this script for the first time, any unsatisfied _Python 3_ dependencies will be reported. Those least likely to be already present are _numpy_ and _matplotlib_.
 
-It is also necessary to have _dot_ (_GraphViz_) installed. This script does not make use of the _PyGraphViz_ library, instead making a _system_ call to the unwrapped version.
+It is also necessary to have _dot_ (_GraphViz_) installed. This script does not make use of the _PyGraphViz_ library, instead making a _system()_ call to the unwrapped version.
 
 ## What it does ...
 
