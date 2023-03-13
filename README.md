@@ -1,5 +1,6 @@
 # island_monies
-A simple script to demonstrate the emergence of island monies
+
+A simple script to demonstrate the emergence of _island monies_ (a simplistic illustration of some _open money_ properties).
 
 ## Installation
 
