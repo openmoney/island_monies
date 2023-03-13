@@ -20,7 +20,7 @@ This version of the script generates two visualizations:
 1. A plot of balances for each _island_ (demonstrating the similarity of each _island money_ balance distribution with each of the others and with that of _legal tender_), and
 2. The fairly rapid emergence of a closed network of _agent_-to-_agent_ payment paths over time, demonstrating the importance of patience and persistence in building such networks.
 
-The capabilities of the script can be seen by running _islands -h_.
+The command line options can be seen by running _islands -h_.
 
 Further information can be found by running  _islands -A_.
 
