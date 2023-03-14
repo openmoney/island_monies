@@ -47,7 +47,7 @@ from matplotlib.ticker import MaxNLocator
 
 #-------------------------------------------------------------------------------
 #
-script_version          = '0.27'
+script_version          = '0.28'
 
 about = '\n' \
 + 'This script can be run in any directory. By default, it creates ./gv/\n' \
@@ -61,15 +61,15 @@ about = '\n' \
 + '- number of agents\t= 100\n' \
 + '- number of islands\t= 10\n' \
 + '(where legal tender is treated as island 0).\n' \
-+ 'These values can be overridden using the following options:\n'
-+ '  -p <number of payments>\n'
++ 'These values can be overridden using the following options:\n' \
++ '  -p <number of payments>\n' \
 + '  -a <number of agents>\n' \
-+ '     (allowable values: 20, 50, 100, 200, 500, 1000, 2000, 5000 or 10000)\n' \
++ '     (allowed values: 20, 50, 100, 200, 500, 1000, 2000, 5000 or 10000)\n' \
 + '  -i <number of islands>\n' \
-+ '     (allowable values: 2, 5 or 10)\n' \
++ '     (allowed values: 2, 5 or 10)\n' \
 + '\n' \
-+ '  -B    causes the balance charts to be drawn\n'
-+ '  -G    causes the payments graphs to be drawn\n'
++ '  -B    causes the balance charts to be drawn\n' \
++ '  -G    causes the payments graphs to be drawn\n' \
 + '\n' \
 + 'By default, legal tender (island 0) is not included when plotting the\n' \
 + 'payment graphs. Otherwise, for anything other than a relatively small\n' \
@@ -79,29 +79,29 @@ about = '\n' \
 + '\n' \
 + '  -S  causes the output to be plotted as SVG rather than PNG.\n' \
 + '\n' \
-+ 'By default, there is one single run of payments, but this can be overridden\n' \
-+ 'to plot both the balance charts and the payments graphs at fixed interval\n' \
-+ '(which must by an integral divisor of the total number of payments) using\n' \
-+ 'the -P option:\n' \
++ 'By default, there is one single run of payments, but this can be\n' \
++ 'overridden to plot both the balance charts and the payments graphs at\n' \
++ 'fixed interval (which must by an integral divisor of the total number of\n' \
++ 'payments) using the -P option:\n' \
 + '    -P <number of steps>\n' \
 + 'This causes the balance charts or payments graphs for all islands to be\n' \
 + 'drawn at regular intervals. This is generally more useful for displaying\n' \
-+ 'the progressive development/completion of the islands\' networks, but may\n' \
-+ 'also be helpful in illustrating the proressive smoothing of the balance\n' \
-+ 'distributions over time, particularly where the payments values are\n' \
-+ 'selected randomly rather than being fixed at 1.\n' \
++ 'the progressive development/completion of the islands\' networks, but\n' \
++ 'may also be helpful in illustrating the proressive smoothing of the\n' \
++ 'balance distributions over time, particularly where the payments values\n' \
++ 'are selected randomly rather than being fixed at 1.\n' \
 + '\n' \
 + 'By default, all payments have a fixed size (1). This can be overridden\n' \
 + 'using the -R option to force it to generate random payments (always\n' \
 + 'integers) between 1 and and an upper limit N, e.g.\n' \
 + '    -R <random payment limit>\n' \
 + '\n' \
-+ 'If the -V option is used, the script will provide a running commentary in\n' \
-+ 'the terminal, explaining what it is doing and where it is putting things.\n' \
++ 'If the -V option is used, the script will provide a running commentary\n' \
++ 'in the terminal, explaining what it is doing and where it is putting\n' \
++ 'things.\n' \
 + '\n' \
 + 'The -h option summarizes the available options.\n' \
 + '\n' \
-
 + 'All output goes to the ./output/ folder (unless overridden by -D). Here,\n' \
 + 'each run of the script creates a subdirectory with a name in the form\n' \
 + '    YYYY-MM-DD_hhmmss\n' \
@@ -127,7 +127,6 @@ about = '\n' \
 + '      Data directory: \t\t.\n' \
 + '      Random payment limit:\t1\n' \
 + '  ------------------------------------------------------------\n' \
-+ '  Show progress every 5 payments\n' \
 + '  10000 payments in 5 steps\n\n' \
 + '      island 1  : ./output/2023-03-13_210132/00/graphs/1_graph.png\n' \
 + '      island 2  : ./output/2023-03-13_210132/00/graphs/2_graph.png\n' \
@@ -296,7 +295,7 @@ if verbose:
 #    else:
 #        print('\tDo not import dataset')
     if number_of_steps:
-        print('\tShow progress in:\t' + str(number_of_steps) + ' steps\n')
+        print('\tShow progress in:\t' + str(number_of_steps) + ' steps')
     else:
         print('\tProgress not shown')
 
