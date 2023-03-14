@@ -204,19 +204,18 @@ ap.add_argument('-A','--about-islands', dest='about_islands',
                 help='Display explanatory notes')
 ap.add_argument('-v', '--version', action='version',
                 version='%(prog)s ' + script_version)
-ap.add_argument('--licence', dest='display_licence', action='store_true',
-                default=False, help='display licence')
+#ap.add_argument('--licence', dest='display_licence', action='store_true',
+#                default=False, help='display licence')
 args = ap.parse_args()
 
 #about_islands = args.about_islands
 if args.about_islands:
     print(about)
-#    os.system('cat about_islands.txt')
     quit()
 
-if args.display_licence:
-    os.system('cat agpl-3.0.txt')
-    quit()
+#if args.display_licence:
+#    os.system('cat agpl-3.0.txt')
+#    quit()
     
 
 n_passes = int(args.n_passes)
