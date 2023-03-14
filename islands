@@ -4,7 +4,7 @@
 #  islands.py
 #  
 #  Copyright 2023 John Waters <john.waters@lrc.org.uk>
-#
+#  
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as
 #  published by the Free Software Foundation, either version 3 of the
@@ -16,7 +16,8 @@
 #  GNU Affero General Public License for more details.
 #
 #  You should have received a copy of the GNU Affero General Public License
-#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>. 
+
 
 #===============================================================================
 # This is a ridiculously simple script to generate payments between two
@@ -46,8 +47,94 @@ from matplotlib.ticker import MaxNLocator
 
 #-------------------------------------------------------------------------------
 #
-script_version          = '0.26'
+script_version          = '0.27'
 
+about = '\n' \
++ 'This script can be run in any directory. By default, it creates ./gv/\n' \
++ 'and ./output/ in the directory from which it is run, but those\n' \
++ 'subdirectories can be created in any writeable directory by using the -D\n' \
++ 'option, e.g.\n' \
++ '    ./islands -D /var/omsim/islands/\n\n' \
++ 'The default values are\n' \
++ '- number of payments  = 10,000\n' \
++ '- number of agents    = 100\n' \
++ '- number of islands   = 10\n' \
++ '(where legal tender is treated as island 0).\n' \
++ 'These values can be overridden using the following options:\n' \
++ '  -p <number of payments>\n' \
++ '  -a <number of agents>\n' \
++ '     (allowable values: 20, 50, 100, 200, 500, 1000, 2000, 5000 or 10000)' \
++ '\n  -i <number of islands>\n' \
++ '     (allowable values: 2, 5 or 10)\n\n' \
++ '  -B    causes the balance charts to be drawn\n' \
++ '  -G    causes the payments graphs to be drawn\n\n' \
++ 'By default, legal tender (island 0) is not included when plotting the\n' \
++ 'payment graphs. Otherwise, for anything other than a relatively small\n' \
++ 'number of agents, the resulting graph would be excessively large (and\n' \
++ 'possibly beyond GraphViz\'s capability to handle). This can be included\n' \
++ 'by using the -C option.\n\n' \
++ '  -S  causes the output to be plotted as SVG rather than PNG.\n\n' \
++ 'By default, there is one single run of payments, but this can be\n' \
++ 'overridden to plot both the balance charts and the payments graphs at\n' \
++ 'fixed interval (which must by an integral divisor of the total number of\n' \
++ 'payments) using the -P option:\n' \
++ '    -P <number of steps>\n' \
++ 'This causes the balance charts or payments graphs for all islands to be\n' \
++ 'drawn at regular intervals. This is generally more useful for displaying\n' \
++ 'the progressive development/completion of the islands\' networks, but\n' \
++ 'may also be helpful in illustrating the proressive smoothing of the\n' \
++ 'balance distributions over time, particularly where the payments values\n' \
++ 'are selected randomly rather than being fixed at 1.\n\n' \
++ 'By default, all payments have a fixed size (1). This can be overridden\n' \
++ 'using the -R option to force it to generate random payments (always\n' \
++ 'integers) between 1 and and an upper limit N, e.g.\n' \
++ '    -R <random payment limit>\n\n' \
++ 'If the -V option is used, the script will provide a running commentary\n' \
++ 'in the terminal, explaining what it is doing and where it is putting\n' \
++ 'things.\n\nThe -h option summarizes the available options.\n\n\n' \
++ 'All output goes to the ./output/ folder (unless overridden by -D). Here,\n' \
++ 'each run of the script creates a subdirectory with a name in the form\n' \
++ '    YYYY-MM-DD_hhmmss\ne.g.\n    ./output/2023-03-13_210132/\n' \
++ 'under which it creates one or more "step" subdirectories (00/ at least)\n' \
++ 'each of which contains the balances/ and graphs/ subdirectories.\n\n' \
++ 'For example, typical output (in this case for a run with 5 islands and 5\n' \
++ 'steps) looks like:\n\n' \
++ '  ./islands -V -p 10000 -a 100 -i 5 -G -P 5\n' \
++ '  ------------------------------------------------------------\n' \
++ '      Number of payments:\t10000\n' \
++ '      Number of agents:\t\t100\n' \
++ '      Number of islands:\t5\n' \
++ '      Agents on each island:\t20\n' \
++ '      Include LT graph:\t\tFalse\n' \
++ '      Plot payment graphs:\tTrue\n' \
++ '      Plot graphs as SVG:\tFalse\n' \
++ '      Show balance plots:\tFalse\n' \
++ '      Show progress in:\t\t5 steps\n' \
++ '      Data directory: \t\t.\n' \
++ '      Random payment limit:\t1\n' \
++ '  ------------------------------------------------------------\n' \
++ '  Show progress every 5 payments\n' \
++ '  10000 payments in 5 steps\n\n' \
++ '      island 1  : ./output/2023-03-13_210132/00/graphs/1_graph.png\n' \
++ '      island 2  : ./output/2023-03-13_210132/00/graphs/2_graph.png\n' \
++ '      island 3  : ./output/2023-03-13_210132/00/graphs/3_graph.png\n' \
++ '      island 4  : ./output/2023-03-13_210132/00/graphs/4_graph.png\n\n' \
++ '      island 1  : ./output/2023-03-13_210132/01/graphs/1_graph.png\n' \
++ '      island 2  : ./output/2023-03-13_210132/01/graphs/2_graph.png\n' \
++ '      island 3  : ./output/2023-03-13_210132/01/graphs/3_graph.png\n' \
++ '      island 4  : ./output/2023-03-13_210132/01/graphs/4_graph.png\n\n' \
++ '      island 1  : ./output/2023-03-13_210132/02/graphs/1_graph.png\n' \
++ '      island 2  : ./output/2023-03-13_210132/02/graphs/2_graph.png\n' \
++ '      island 3  : ./output/2023-03-13_210132/02/graphs/3_graph.png\n' \
++ '      island 4  : ./output/2023-03-13_210132/02/graphs/4_graph.png\n\n' \
++ '      island 1  : ./output/2023-03-13_210132/03/graphs/1_graph.png\n' \
++ '      island 2  : ./output/2023-03-13_210132/03/graphs/2_graph.png\n' \
++ '      island 3  : ./output/2023-03-13_210132/03/graphs/3_graph.png\n' \
++ '      island 4  : ./output/2023-03-13_210132/03/graphs/4_graph.png\n\n' \
++ '      island 1  : ./output/2023-03-13_210132/04/graphs/1_graph.png\n' \
++ '      island 2  : ./output/2023-03-13_210132/04/graphs/2_graph.png\n' \
++ '      island 3  : ./output/2023-03-13_210132/04/graphs/3_graph.png\n' \
++ '      island 4  : ./output/2023-03-13_210132/04/graphs/3_graph.png\n\n'
 
 #-------------------------------------------------------------------------------
 # Defaults:
@@ -121,14 +208,17 @@ ap.add_argument('--licence', dest='display_licence', action='store_true',
                 default=False, help='display licence')
 args = ap.parse_args()
 
+#about_islands = args.about_islands
 if args.about_islands:
-    os.system('cat about_islands.txt')
+    print(about)
+#    os.system('cat about_islands.txt')
     quit()
 
 if args.display_licence:
-    os.system('cat licence.txt')
+    os.system('cat agpl-3.0.txt')
     quit()
-  
+    
+
 n_passes = int(args.n_passes)
 n_agents = int(args.n_agents)
 n_islands = int(args.n_islands)
@@ -187,11 +277,11 @@ if verbose:
     print('\tPlot payment graphs:\t' + str(plot_graphs))
     print('\tPlot graphs as SVG:\t' + str(plot_svg))
     print('\tShow balance plots:\t' + str(plot_balances))
-    print('\tExport CSV dataset:\t' + str(export_csv))
-    if import_csv_file:
-        print('\tImport CSV dataset:\t' + import_csv_file)
-    else:
-        print('\tDo not import dataset')
+#    print('\tExport CSV dataset:\t' + str(export_csv))
+#    if import_csv_file:
+#        print('\tImport CSV dataset:\t' + import_csv_file)
+#    else:
+#        print('\tDo not import dataset')
     if number_of_steps:
         print('\tShow progress in:\t' + str(number_of_steps) + ' steps\n')
     else:
@@ -537,7 +627,7 @@ for s in range(n_steps): # outer loop: n_passes = n_steps * n_passes_per_step
             print()
 
 
-os.system('rm ' + data_dir + '/gv/*') # clean-up
+os.system('rm ' + data_dir + '/gv/*')
 
 #===============================================================================
         
