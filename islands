@@ -93,8 +93,7 @@ about = '\n' \
 + 'under which it creates one or more "step" subdirectories (00/ at least)\n' \
 + 'each of which contains the balances/ and graphs/ subdirectories.\n\n' \
 + 'For example, typical output (in this case for a run with 5 islands and 5\n' \
-+ 'steps) looks like:\n\n' \
-+ '  ./islands -V -p 10000 -a 100 -i 5 -G -P 5\n' \
++ 'steps) looks like:\n\n  ./islands -V -p 10000 -a 100 -i 5 -G -P 5\n' \
 + '  ------------------------------------------------------------\n' \
 + '      Number of payments:\t10000\n' \
 + '      Number of agents:\t\t100\n' \
