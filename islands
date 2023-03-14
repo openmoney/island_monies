@@ -630,28 +630,6 @@ os.system('rm ' + data_dir + '/gv/*')
 
 #===============================================================================
         
-# TEST
-test4 = False
-if test4:
-    for i in range(n_islands):
-        print('\npayments for island ' + str(i))
-        print(payments[i])
-        m = 0
-        l = len(payments)
-        for n in range(l):
-            m += payments[i][l]
-        M = m/l
-        print('mean value = ' + str(M))
-        print()
-        print('balances[?][0] = ' + str(balances[island][0]))
-        print()
-        print('\nbalances for island ' + str(i))
-        print(balances[i])
-        #print('mean value = ' + str(mean(balances)))
-        print()
-        print()
-        print('Members:')
-
 if verbose:
     if n_agents <= 100:
         print('Island membership:')
