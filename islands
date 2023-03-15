@@ -531,7 +531,7 @@ for s in range(n_steps): # outer loop: n_passes = n_steps * n_passes_per_step
                 # NB Although all agents have access to LT, not all agents will
                 #    have used it during the first few hundred passes. Therefore
                 #    LT is treated here as an island (one with an inevitably
-                #    faster growing membership. This will also make the dataset
+                #    faster growing membership). This will also make the dataset
                 #    comparisons more realistic.
                 members[island][payer] = True
                 members[island][payee] = True           
