@@ -625,10 +625,7 @@ for s in range(n_steps): # outer loop: n_passes = n_steps * n_passes_per_step
             title += '\n' + str(n_agents) + ' agents'
             title += '\n' + str(n_islands) + ' islands\n' + str(n_passes)
 
-            print('random_payment ' + str(random_payment))
-
-
-            
+            #print('random_payment ' + str(random_payment))
             if random_payment == 1:
                 title += ' payments of 1 unit'
             else:
