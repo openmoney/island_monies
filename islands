@@ -47,7 +47,7 @@ from matplotlib.ticker import MaxNLocator
 
 #-------------------------------------------------------------------------------
 #
-script_version          = '0.28'
+script_version          = '0.29'
 
 about = '\n' \
 + 'This script can be run in any directory. By default, it creates ./gv/\n' \
@@ -99,6 +99,9 @@ about = '\n' \
 + 'If the -V option is used, the script will provide a running commentary\n' \
 + 'in the terminal, explaining what it is doing and where it is putting\n' \
 + 'things.\n' \
++ '\n' \
++ 'If the -E option is used, the script will provide output the payments\n' \
++ '(one per line) to STDOUT. This overrides the -V option.\n' \
 + '\n' \
 + 'The -h option summarizes the available options.\n' \
 + '\n' \
@@ -209,9 +212,9 @@ ap.add_argument('-R', '--random-payment-limit', dest='random_payment_limit',
 #ap.add_argument('-W', '--create-html-segment',
 #                dest='create_html_segment', action='store_true', default=False,
 #                help='Create an HTML segment for wrapping in a web page')
-#ap.add_argument('-E', '--export-csv', dest='export_csv',
-#                action='store_true', default=default_export_csv,
-#                help='export CSV to STDOUT')
+ap.add_argument('-E', '--export-csv', dest='export_csv',
+                action='store_true', default=default_export_csv,
+                help='export payments as CSV to STDOUT')
 ap.add_argument('-A','--about-islands', dest='about_islands',
                 action='store_true', default=default_about_islands,
                 help='Display explanatory notes')
@@ -243,8 +246,8 @@ plot_svg = args.plot_svg
 
 plot_balances = args.plot_balances
 
-#export_csv = args.export_csv
-export_csv = False
+export_csv = args.export_csv
+#export_csv = False
 
 number_of_steps = args.number_of_steps
 if number_of_steps:
@@ -289,7 +292,7 @@ if verbose:
     print('\tPlot payment graphs:\t' + str(plot_graphs))
     print('\tPlot graphs as SVG:\t' + str(plot_svg))
     print('\tShow balance plots:\t' + str(plot_balances))
-#    print('\tExport CSV dataset:\t' + str(export_csv))
+    print('\tExport CSV dataset:\t' + str(export_csv))
 #    if import_csv_file:
 #        print('\tImport CSV dataset:\t' + import_csv_file)
 #    else:
@@ -315,8 +318,6 @@ if number_of_steps:
     else:
         if verbose:
             print('Show progress every ' + str(n_steps) + ' payments\n')
-#            print('Not yet implemented')
-#            quit()
 
 if create_html_segment:
     if verbose:
@@ -402,7 +403,7 @@ members  = [ [ False for y in range(n_agents) ] for x in range(n_islands) ]
 #
 
 def payment_value():
-    if rpl == 1:
+    if random_payment == 1:
         return 1
     else:
         return random.randint(0,float(rpl))
@@ -541,6 +542,7 @@ for s in range(n_steps): # outer loop: n_passes = n_steps * n_passes_per_step
                           )
 
             payment = payment_value() # either a random value or 1.
+            #print(str(rpl) + ' : ' + str(payment))
 
             if export_csv:
                 print(str(island)
