@@ -317,7 +317,8 @@ if number_of_steps:
         quit()
     else:
         if verbose:
-            print('Show progress every ' + str(n_steps) + ' payments\n')
+            print('Show progress every ' + str(n_passews // n_steps) \
+                  + ' payments\n')
 
 if create_html_segment:
     if verbose:
